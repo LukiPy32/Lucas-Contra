@@ -3,8 +3,8 @@
 ## Publicar en GitHub Pages
 
 1. Descomprimí este ZIP.
-2. Subí index.html, styles.css, script.js y la carpeta assets al directorio que publica GitHub Pages. Reemplazá los archivos anteriores y conservá la estructura: index.html debe quedar en la raíz publicada, no dentro de otra carpeta.
-3. Esperá a que termine el despliegue y abrí tu URL de GitHub Pages. Si ves la versión anterior, recargá sin caché.
+2. Subí index.html, styles-lc-v2.css, script-lc-v2.js y la carpeta assets al directorio que publica GitHub Pages. Reemplazá index.html y conservá los nombres nuevos del CSS y JavaScript: evitan cargar versiones anteriores desde la caché. index.html debe quedar en la raíz publicada, no dentro de otra carpeta. Los antiguos styles.css y script.js ya no se utilizan.
+3. Esperá a que termine el despliegue y abrí tu URL de GitHub Pages. Recargá con Ctrl+F5. Debés ver el logo horizontal grande, el botón cian «Enviar mensaje» y el aviso legible debajo. Si dice «Preparar mensaje» o «form.privacy», todavía se está cargando una versión anterior o incompleta.
 
 ## Activar el contacto (una sola vez)
 
