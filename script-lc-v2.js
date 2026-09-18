@@ -88,8 +88,10 @@ const translations = {
     'form.message': 'Mensaje',
     'form.messagePlaceholder': 'Contame un poco sobre tu idea...',
     'form.submit': 'Enviar mensaje',
-    'form.privacy': 'Al enviar, FormSubmit procesa tus datos para entregarme el mensaje por email. Continuarás a su verificación y confirmación.',
-    'form.sending': 'Continuando a la verificación de FormSubmit…',
+    'form.privacy': 'FormSubmit procesa tus datos para entregarme el mensaje por email.',
+    'form.sending': 'Enviando mensaje…',
+    'form.received': 'El servicio recibió tu mensaje. ¡Gracias por contactarme!',
+    'form.error': 'No pudimos confirmar el envío. Tus datos siguen acá; podés intentar nuevamente en unos minutos.',
     'form.local': 'Probá el envío desde la web publicada, no desde un archivo local.',
     'form.invalid': 'Revisá los campos marcados antes de continuar.',
     'form.copied': 'Mensaje preparado y copiado. Elegí el canal de contacto de Lucas para enviarlo.',
@@ -174,8 +176,10 @@ const translations = {
     'form.message': 'Message',
     'form.messagePlaceholder': 'Tell me a little about your idea...',
     'form.submit': 'Send message',
-    'form.privacy': 'When you submit, FormSubmit processes your details to email me your message. You will continue to its verification and confirmation page.',
-    'form.sending': 'Continuing to FormSubmit verification…',
+    'form.privacy': 'FormSubmit processes your details to email me your message.',
+    'form.sending': 'Sending message…',
+    'form.received': 'The service received your message. Thank you for getting in touch!',
+    'form.error': 'We could not confirm submission. Your details are still here; you can try again in a few minutes.',
     'form.local': 'Please submit from the published website, not from a local file.',
     'form.invalid': 'Please review the highlighted fields before continuing.',
     'form.copied': "Your message is ready and copied. Choose one of Lucas's contact channels to send it.",
@@ -410,7 +414,10 @@ function setFormStatus(key) {
   formStatus.textContent = translate(key);
 }
 
-contactForm.addEventListener('submit', (event) => {
+let formSubmitting = false;
+contactForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  if (formSubmitting) return;
   const fields = [...contactForm.querySelectorAll('input, textarea')];
   fields.forEach((field) => field.classList.toggle('invalid', !field.checkValidity()));
 
@@ -427,6 +434,32 @@ contactForm.addEventListener('submit', (event) => {
     setFormStatus('form.local');
     return;
   }
-  // Native POST goes to the service; delivery is not confirmed on this page.
+  formSubmitting = true;
+  const button = contactForm.querySelector('button[type="submit"]');
+  button.disabled = true;
+  contactForm.setAttribute('aria-busy', 'true');
   setFormStatus('form.sending');
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 25000);
+  try {
+    const response = await fetch('https://formsubmit.co/ajax/lic.contact.dev@gmail.com', {
+      method: 'POST',
+      headers: { Accept: 'application/json' },
+      body: new FormData(contactForm),
+      signal: controller.signal,
+    });
+    const result = await response.json();
+    if (!response.ok || !(result.success === true || result.success === 'true')) {
+      throw new Error('Submission not acknowledged');
+    }
+    setFormStatus('form.received');
+    contactForm.reset();
+  } catch {
+    setFormStatus('form.error');
+  } finally {
+    clearTimeout(timeout);
+    formSubmitting = false;
+    button.disabled = false;
+    contactForm.removeAttribute('aria-busy');
+  }
 });
