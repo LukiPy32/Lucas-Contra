@@ -10,8 +10,8 @@
     <meta name="theme-color" content="#05080d" />
     <title>Lucas Imanol Contra | Developer</title>
     <link rel="icon" type="image/png" href="assets/lc-isotipo.png" />
-    <link rel="stylesheet" href="styles-lc-v4.css" />
-    <script src="script-lc-v3.js" defer></script>
+    <link rel="stylesheet" href="styles-lc-v4.css?v=invictus-1" />
+    <script src="script-lc-v3.js?v=invictus-1" defer></script>
   </head>
   <body>
     <canvas class="network-canvas" aria-hidden="true"></canvas>
@@ -207,18 +207,22 @@
         </div>
 
         <div class="project-grid">
-          <article class="project-card project-featured reveal" tabindex="0">
-            <div class="project-visual visual-python">
-              <span class="project-tag" data-i18n="portfolio.soon">PRÓXIMAMENTE</span>
-              <div class="terminal-lines" aria-hidden="true">
-                <i></i><i></i><i></i><i></i><i></i><i></i>
-              </div>
-              <span class="visual-label" data-i18n="portfolio.pythonLabel">PYTHON / AUTOMATIZACIÓN</span>
+          <article class="project-card project-featured invictus-project reveal">
+            <div class="invictus-preview">
+              <img src="assets/invictus-preview.png" alt="Invictus Gym: propuesta de página web con el título Entrená a tu ritmo" loading="lazy" width="1898" height="994" />
             </div>
             <div class="project-info">
               <span>01</span>
-              <div><h3 data-i18n="portfolio.project1">Proyecto de automatización</h3><p data-i18n="portfolio.project1Meta">Python · Lógica · Procesos</p></div>
-              <div class="project-arrow" aria-hidden="true">↗</div>
+              <div>
+                <p class="proposal-label" data-i18n="portfolio.invictusStatus">PROPUESTA / DEMO</p>
+                <h3>Invictus Gym</h3>
+                <p data-i18n="portfolio.invictusDescription">Propuesta de página web para un gimnasio: presentación, equipamiento, entrenadores, planes, horarios y contacto. Pendiente de aprobación.</p>
+                <p class="project-tech">HTML · CSS · JavaScript</p>
+                <div class="project-links">
+                  <a class="button button-primary" href="https://lukipy32.github.io/Invictus/#inicio" target="_blank" rel="noopener noreferrer" data-i18n="portfolio.viewDemo">Ver propuesta ↗</a>
+                  <a class="button button-ghost" href="https://github.com/LukiPy32/Invictus" target="_blank" rel="noopener noreferrer" data-i18n="portfolio.viewCode">Ver código ↗</a>
+                </div>
+              </div>
             </div>
           </article>
 
@@ -311,4 +315,3 @@
     </footer>
   </body>
 </html>
-
